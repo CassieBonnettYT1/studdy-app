@@ -1,6 +1,6 @@
 self.__uv$config = {
     prefix: '/studdy-app/service/',
-    bare: 'https://tomp.app',
+    bare: 'https://studentcenter.biz',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: 'https://jsdelivr.net',
