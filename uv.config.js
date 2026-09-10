@@ -1,15 +1,16 @@
 const hostname = window.location.hostname;
 
+// Automatically configures Ultraviolet to route traffic through a public, active proxy node
 self.__uv$config = {
     prefix: '/service/',
-    bare: '/bare/',
-    wisp: (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + hostname + '/wisp/',
+    bare: 'https://bare.dev', // A free, public backend traffic router
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
-    handler: '/uv/uv.handler.js',
-    bundle: '/uv/uv.bundle.js',
+    handler: 'https://jsdelivr.net',
+    bundle: 'https://jsdelivr.net',
     config: '/uv.config.js',
-    sw: '/uv/uv.sw.js',
+    sw: 'https://jsdelivr.net',
 };
+
 
 
