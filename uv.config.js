@@ -1,10 +1,10 @@
 self.__uv$config = {
-    prefix: '/studdy-app/service/',
-    bare: 'https://studentcenter.biz',
+    prefix: '/service/',
+    bare: '/bare/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
-    handler: 'https://jsdelivr.net',
-    bundle: 'https://jsdelivr.net',
-    config: '/studdy-app/uv.config.js',
-    sw: '/studdy-app/uv.sw.js',
+    handler: '/uv/uv.handler.js',
+    bundle: '/uv/uv.bundle.js',
+    config: '/uv/uv.config.js',
+    sw: '/uv/uv.sw.js',
 };
