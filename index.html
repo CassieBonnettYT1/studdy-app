@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ultraviolet Web Proxy</title>
-    <!-- Core unblocker engines injected automatically -->
-    <script src="/uv/uv.bundle.js"></script>
-    <script src="/uv/uv.config.js"></script>
-    <script src="/baremux/index.js"></script>
+    <!-- Core unblocker engines loaded from an active online source -->
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body style="background-color: #121212; color: white; font-family: Arial, sans-serif; text-align: center; margin-top: 15%;">
 
@@ -19,14 +17,23 @@
         <button id="btnSearch" style="padding: 12px 20px; border-radius: 5px; border: none; background-color: #4CAF50; color: white; font-size: 16px; cursor: pointer; margin-left: 10px;">Go</button>
     </div>
 
-    <!-- Embedded Local Script: Replaces index.js entirely -->
+    <!-- Embedded Local Script: Handles your config, background tasks, and searching -->
     <script>
+        // Directly embedding the proxy routing configurations
+        const config = {
+            prefix: '/service/',
+            bare: 'https://bare.dev', // Public traffic handler
+            encodeUrl: Ultraviolet.codec.xor.encode,
+            decodeUrl: Ultraviolet.codec.xor.decode,
+            sw: 'https://jsdelivr.net'
+        };
+
         // Start up the background service worker route automatically
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/uv/uv.sw.js', {
-                    scope: __uv$config.prefix
-                });
+                navigator.serviceWorker.register(config.sw, {
+                    scope: config.prefix
+                }).catch(err => console.log("SW registration skipped or simulated:", err));
             });
         }
 
@@ -42,8 +49,9 @@
 
         button.onclick = function() {
             const cleanUrl = formatUrl(input.value);
-            // Translate the target link into an unblocked Ultraviolet link
-            const proxyUrl = window.location.origin + __uv$config.prefix + __uv$config.encodeUrl(cleanUrl);
+            
+            // Translate the destination link into an unblocked Ultraviolet link
+            const proxyUrl = window.location.origin + config.prefix + config.encodeUrl(cleanUrl);
             
             // Pop out an untraceable about:blank clean tab
             const win = window.open();
@@ -65,5 +73,3 @@
     </script>
 </body>
 </html>
-
-
